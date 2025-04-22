@@ -29,11 +29,11 @@ This project is a distributed microservices-based solution that simulates a real
 ## 🗂️ Repository Structure (Monorepo)
 
 ```
-comandero-project/
-├── comanda-service/         # Main service to create orders
-├── cocina-service/          # Handles kitchen-related orders
-├── barra-service/           # Handles bar-related orders
-├── notificacion-service/    # Notification service (push/email)
+digital-commander/
+├── order-service/           # Main service to create and manage orders
+├── kitchen-service/         # Handles kitchen-specific orders
+├── bar-service/             # Handles bar-specific orders
+├── notification-service/    # Notification service (push/email)
 ├── gateway/                 # API Gateway
 ├── shared/                  # Common events and utilities
 ├── infra/                   # Kafka, databases, nginx
@@ -63,13 +63,13 @@ This will start:
 
 ## ⚙️ Microservices Overview
 
-| Service              | Port | Description                                  |
-|----------------------|------|----------------------------------------------|
-| comanda-service      | 8081 | Creates orders and splits them               |
-| cocina-service       | 8082 | Manages kitchen-specific orders              |
-| barra-service        | 8083 | Manages bar-specific orders                  |
-| notificacion-service | 8084 | Sends notifications to users/waiters         |
-| gateway              | 8080 | API Gateway routing requests to services     |
+| Service               | Port | Description                                  |
+|-----------------------|------|----------------------------------------------|
+| order-service         | 8081 | Creates and manages orders                   |
+| kitchen-service       | 8082 | Manages kitchen-specific orders              |
+| bar-service           | 8083 | Manages bar-specific orders                  |
+| notification-service  | 8084 | Sends notifications to users/waiters         |
+| gateway               | 8080 | API Gateway routing requests to services     |
 
 ---
 
