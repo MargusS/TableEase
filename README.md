@@ -35,7 +35,6 @@ digital-commander/
 ├── bar-service/             # Handles bar-specific orders
 ├── notification-service/    # Notification service (push/email)
 ├── gateway/                 # API Gateway
-├── shared/                  # Common events and utilities
 ├── infra/                   # Kafka, databases, nginx
 ├── docker-compose.yml       # Service orchestration
 └── .github/workflows/ci.yml # CI/CD pipeline with GitHub Actions
