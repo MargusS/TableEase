@@ -81,7 +81,7 @@ This will start:
 
 ## 🧠 Technologies Used
 
-- Java 17 + Spring Boot
+- Java 21 + Spring Boot
 - Kafka
 - PostgreSQL
 - Docker & Docker Compose
