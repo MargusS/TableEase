@@ -1,10 +1,10 @@
-package com.tablease.orderservice.model.order;
+package com.tablease.orderservice.domain.order;
 
-import com.tablease.orderservice.model.dish.valueobjects.Destination;
-import com.tablease.orderservice.model.dish.valueobjects.DishId;
-import com.tablease.orderservice.model.dish.valueobjects.Price;
-import com.tablease.orderservice.model.order.valueobjects.OrderEntryId;
-import com.tablease.orderservice.model.order.valueobjects.Quantity;
+import com.tablease.orderservice.domain.dish.valueobjects.Destination;
+import com.tablease.orderservice.domain.dish.valueobjects.DishId;
+import com.tablease.orderservice.domain.dish.valueobjects.Price;
+import com.tablease.orderservice.domain.order.valueobjects.OrderEntryId;
+import com.tablease.orderservice.domain.order.valueobjects.Quantity;
 import lombok.Getter;
 
 import java.time.Instant;

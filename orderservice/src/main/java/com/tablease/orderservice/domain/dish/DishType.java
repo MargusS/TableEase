@@ -1,7 +1,7 @@
-package com.tablease.orderservice.model.dish;
+package com.tablease.orderservice.domain.dish;
 
-import com.tablease.orderservice.model.dish.valueobjects.Destination;
-import com.tablease.orderservice.model.dish.valueobjects.DishTypeId;
+import com.tablease.orderservice.domain.dish.valueobjects.Destination;
+import com.tablease.orderservice.domain.dish.valueobjects.DishTypeId;
 import lombok.Getter;
 
 import java.time.Instant;

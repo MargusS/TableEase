@@ -1,4 +1,4 @@
-package com.tablease.orderservice.model.order.valueobjects;
+package com.tablease.orderservice.domain.order.valueobjects;
 
 public enum Status {
 	CREATED,

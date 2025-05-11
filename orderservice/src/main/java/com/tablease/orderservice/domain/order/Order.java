@@ -1,8 +1,8 @@
-package com.tablease.orderservice.model.order;
+package com.tablease.orderservice.domain.order;
 
-import com.tablease.orderservice.model.order.valueobjects.OrderId;
-import com.tablease.orderservice.model.order.valueobjects.Origin;
-import com.tablease.orderservice.model.order.valueobjects.Status;
+import com.tablease.orderservice.domain.order.valueobjects.OrderId;
+import com.tablease.orderservice.domain.order.valueobjects.Origin;
+import com.tablease.orderservice.domain.order.valueobjects.Status;
 import lombok.Getter;
 
 import java.time.Instant;

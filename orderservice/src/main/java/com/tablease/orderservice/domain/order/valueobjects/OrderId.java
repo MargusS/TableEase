@@ -1,12 +1,12 @@
-package com.tablease.orderservice.model.dish.valueobjects;
+package com.tablease.orderservice.domain.order.valueobjects;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class DishId {
+public class OrderId {
     private final UUID value;
 
-    public DishId(UUID value) {
+    public OrderId(UUID value) {
         this.value = Objects.requireNonNull(value);
     }
 
