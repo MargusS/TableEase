@@ -1,4 +1,4 @@
-package com.tablease.orderservice.model.valueObject;
+package com.tablease.orderservice.model.order.valueobjects;
 
 import lombok.Getter;
 

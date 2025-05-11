@@ -1,0 +1,34 @@
+package com.tablease.orderservice.model.order;
+
+import com.tablease.orderservice.model.dish.valueobjects.Destination;
+import com.tablease.orderservice.model.dish.valueobjects.DishId;
+import com.tablease.orderservice.model.dish.valueobjects.Price;
+import com.tablease.orderservice.model.order.valueobjects.OrderEntryId;
+import com.tablease.orderservice.model.order.valueobjects.Quantity;
+import lombok.Getter;
+
+import java.time.Instant;
+
+@Getter
+public class OrderEntry {
+
+	private final OrderEntryId id;
+	private final DishId dishId;
+	private final String dishName;
+	private final Price dishPriceAtOrder;
+	private final Quantity quantity;
+	private final Destination dishDestination;
+	private final Instant createdAt;
+	private Instant updatedAt;
+
+	public OrderEntry(OrderEntryId id, DishId dishId, String dishName, Price price, Quantity quantity, Destination dishDestination,Instant createdAt) {
+		this.id = id;
+		this.dishId = dishId;
+		this.dishName = dishName;
+		this.dishPriceAtOrder = price;
+		this.quantity = quantity;
+		this.dishDestination = dishDestination;
+		this.createdAt = createdAt != null ? createdAt : Instant.now();
+		this.updatedAt = this.createdAt;
+	}
+}
