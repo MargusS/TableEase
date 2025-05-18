@@ -1,4 +1,4 @@
-package com.tablease.orderservice.domain.dish;
+package com.tablease.orderservice.domain.dish.valueobjects;
 
 import lombok.Getter;
 
