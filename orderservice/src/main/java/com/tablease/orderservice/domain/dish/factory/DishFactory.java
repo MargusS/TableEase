@@ -10,6 +10,6 @@ import java.time.Instant;
 import java.util.Set;
 
 public interface DishFactory {
-    Dish create(DishId id, String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, Instant createdAt, String thumbnailUrl);
+    Dish create(String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, Instant createdAt, String thumbnailUrl);
     String getSupportedFactory();
 }

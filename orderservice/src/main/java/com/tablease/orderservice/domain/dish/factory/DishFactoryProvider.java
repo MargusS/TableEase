@@ -1,6 +1,5 @@
-package com.tablease.orderservice.app.dish;
+package com.tablease.orderservice.domain.dish.factory;
 
-import com.tablease.orderservice.domain.dish.factory.DishFactory;
 import com.tablease.orderservice.domain.dish.DishType;
 
 import java.util.List;

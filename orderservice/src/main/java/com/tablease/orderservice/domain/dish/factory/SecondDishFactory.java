@@ -8,11 +8,12 @@ import com.tablease.orderservice.domain.dish.valueobjects.Price;
 
 import java.time.Instant;
 import java.util.Set;
+import java.util.UUID;
 
 public class SecondDishFactory implements DishFactory{
     @Override
-    public Dish create(DishId id, String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, Instant createdAt, String thumbnailUrl) {
-        return new Dish(id, name,description,allergens, isActive, price, cost, type, createdAt, thumbnailUrl);
+    public Dish create(String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, Instant createdAt, String thumbnailUrl) {
+        return new Dish(new DishId(UUID.randomUUID()), name,description,allergens, isActive, price, cost, type, createdAt, thumbnailUrl);
     }
 
 
