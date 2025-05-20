@@ -11,5 +11,4 @@ public record DishResponse (
         UUID dishTypeId,
         List<UUID> allergenIds,
         BigDecimal cost,
-        String thumbnail
-){};
+        String thumbnail) {}
