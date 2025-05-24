@@ -1,6 +1,7 @@
-package com.tablease.orderservice.app.dish;
+package com.tablease.orderservice.app.dish.presenter;
 
 import com.tablease.orderservice.app.dish.dto.DishResponse;
+import com.tablease.orderservice.app.dish.ports.DishMapperPort;
 import com.tablease.orderservice.domain.dish.Dish;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,7 +10,7 @@ public class DishPresenterImpl implements DishPresenter{
 
     private final DishMapperPort dishMapper;
 
-    public DishPresenterImpl (DishMapperPort dishMapperPort){
+    public DishPresenterImpl(DishMapperPort dishMapperPort) {
         this.dishMapper = dishMapperPort;
     }
 
