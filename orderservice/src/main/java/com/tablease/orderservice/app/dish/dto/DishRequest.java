@@ -4,11 +4,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-public record DishRequest (
-        String name,
-        String description,
-        BigDecimal price,
-        UUID dishTypeId,
-        List<UUID> allergenIds,
-        BigDecimal cost,
-        String thumbnail) {}
+public record DishRequest(String name,
+                          String description,
+                          List<UUID> allergenIds,
+                          boolean isActive,
+                          BigDecimal price,
+                          BigDecimal cost,
+                          UUID dishTypeId,
+                          String thumbnailUrl) {
+}
