@@ -1,10 +1,12 @@
-package com.tablease.orderservice.infra.mappers;
+package com.tablease.orderservice.infra.db.jpa.mappers;
 
-import com.tablease.orderservice.app.dish.DishMapperPort;
 import com.tablease.orderservice.app.dish.dto.DishResponse;
+import com.tablease.orderservice.app.dish.ports.DishMapperPort;
 import com.tablease.orderservice.domain.dish.Dish;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DishMapper implements DishMapperPort {
     private final ModelMapper modelMapper;
 
