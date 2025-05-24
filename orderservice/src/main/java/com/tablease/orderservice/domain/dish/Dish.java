@@ -1,6 +1,5 @@
 package com.tablease.orderservice.domain.dish;
 
-import com.tablease.orderservice.domain.dish.valueobjects.Allergen;
 import com.tablease.orderservice.domain.dish.valueobjects.DishId;
 import com.tablease.orderservice.domain.dish.valueobjects.Price;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class Dish {
     private final String thumbnailUrl;
     private final DishType type;
 
-    public Dish(DishId id, String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, Instant createdAt, String thumbnailUrl) {
+    public Dish(DishId id, String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, String thumbnailUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,7 +30,7 @@ public class Dish {
         this.price = price;
         this.cost = cost;
         this.type = type;
-        this.createdAt = createdAt != null ? createdAt : Instant.now();
+        this.createdAt = Instant.now();
         this.thumbnailUrl = thumbnailUrl;
         this.updatedAt = this.createdAt;
     }
