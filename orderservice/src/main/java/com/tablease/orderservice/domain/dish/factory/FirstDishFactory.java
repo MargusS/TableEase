@@ -1,23 +1,22 @@
 package com.tablease.orderservice.domain.dish.factory;
 
+import com.tablease.orderservice.domain.dish.Allergen;
 import com.tablease.orderservice.domain.dish.Dish;
 import com.tablease.orderservice.domain.dish.DishType;
-import com.tablease.orderservice.domain.dish.valueobjects.Allergen;
 import com.tablease.orderservice.domain.dish.valueobjects.DishId;
 import com.tablease.orderservice.domain.dish.valueobjects.Price;
 
-import java.time.Instant;
 import java.util.Set;
 import java.util.UUID;
 
-public class FirstDishFactory implements DishFactory{
+public class FirstDishFactory implements DishFactory {
     @Override
-    public Dish create(String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, Instant createdAt, String thumbnailUrl) {
-        return new Dish(new DishId(UUID.randomUUID()), name,description,allergens, isActive, price, cost, type, createdAt, thumbnailUrl);
+    public Dish create(String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, String thumbnailUrl) {
+        return new Dish(new DishId(UUID.randomUUID()), name, description, allergens, isActive, price, cost, type, thumbnailUrl);
     }
 
     @Override
-    public String getSupportedFactory(){
+    public String getSupportedFactory() {
         return "FIRST COURSE";
     }
 }
