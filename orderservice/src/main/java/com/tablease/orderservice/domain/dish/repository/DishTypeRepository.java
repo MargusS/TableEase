@@ -2,8 +2,8 @@ package com.tablease.orderservice.domain.dish.repository;
 
 import com.tablease.orderservice.domain.dish.DishType;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 public interface DishTypeRepository {
@@ -11,7 +11,7 @@ public interface DishTypeRepository {
 
     Optional<DishType> findById(UUID dishTypeId);
 
-    Set<DishType> findAll();
+    List<DishType> findAll();
 
     DishType update(DishType dishType);
 
