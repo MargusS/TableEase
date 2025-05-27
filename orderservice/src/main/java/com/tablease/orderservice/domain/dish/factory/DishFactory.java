@@ -5,13 +5,13 @@ import com.tablease.orderservice.domain.dish.Dish;
 import com.tablease.orderservice.domain.dish.DishType;
 import com.tablease.orderservice.domain.dish.valueobjects.Price;
 
-import java.util.Set;
+import java.util.List;
 
 public interface DishFactory {
 
     Dish create(String name,
                 String description,
-                Set<Allergen> allergens,
+                List<Allergen> allergens,
                 boolean isActive,
                 Price price,
                 Price cost,

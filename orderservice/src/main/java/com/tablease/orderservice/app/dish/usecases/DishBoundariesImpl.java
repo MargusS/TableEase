@@ -14,7 +14,7 @@ import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
 import com.tablease.orderservice.domain.dish.valueobjects.Price;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class DishBoundariesImpl implements DishBoundaries {
@@ -41,7 +41,7 @@ public class DishBoundariesImpl implements DishBoundaries {
             return dishPresenter.error("Invalid dish type");
         }
 
-        Set<Allergen> allergens = allergenRepository.findAllByUUID(request.allergenIds());
+        List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenIds());
 
         DishFactory factory = dishFactoryProvider.getFactory(dishType);
         Dish dish = factory.create(request.name(),

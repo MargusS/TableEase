@@ -5,7 +5,7 @@ import com.tablease.orderservice.domain.dish.valueobjects.Price;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 public class Dish {
@@ -14,14 +14,14 @@ public class Dish {
     private Instant updatedAt;
     private final String name;
     private final String description;
-    private final Set<Allergen> allergens;
+    private final List<Allergen> allergens;
     private final boolean isActive;
     private final Price price;
     private final Price cost;
     private final String thumbnailUrl;
     private final DishType type;
 
-    public Dish(DishId id, String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, String thumbnailUrl) {
+    public Dish(DishId id, String name, String description, List<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, String thumbnailUrl) {
         this.id = id;
         this.name = name;
         this.description = description;

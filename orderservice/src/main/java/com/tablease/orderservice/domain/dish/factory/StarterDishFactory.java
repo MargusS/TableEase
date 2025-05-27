@@ -6,12 +6,12 @@ import com.tablease.orderservice.domain.dish.DishType;
 import com.tablease.orderservice.domain.dish.valueobjects.DishId;
 import com.tablease.orderservice.domain.dish.valueobjects.Price;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 public class StarterDishFactory implements DishFactory {
     @Override
-    public Dish create(String name, String description, Set<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, String thumbnailUrl) {
+    public Dish create(String name, String description, List<Allergen> allergens, boolean isActive, Price price, Price cost, DishType type, String thumbnailUrl) {
         return new Dish(new DishId(UUID.randomUUID()), name, description, allergens, isActive, price, cost, type, thumbnailUrl);
     }
 
