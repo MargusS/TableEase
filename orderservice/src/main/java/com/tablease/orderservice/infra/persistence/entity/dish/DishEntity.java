@@ -1,4 +1,4 @@
-package com.tablease.orderservice.infra.db.jpa.entities.dish;
+package com.tablease.orderservice.infra.persistence.entity.dish;
 
 import jakarta.persistence.*;
 
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "dishes")
+@Table(name = "dishes", schema = "dish_management")
 public class DishEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +31,7 @@ public class DishEntity {
     @ManyToMany
     @JoinTable(
             name = "dish_allergens",
+            schema = "dish_management",
             joinColumns = @JoinColumn(name = "dish_id"),
             inverseJoinColumns = @JoinColumn(name = "allergen_id")
     )

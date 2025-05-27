@@ -1,4 +1,4 @@
-package com.tablease.orderservice.infra.db.jpa.entities.dish;
+package com.tablease.orderservice.infra.persistence.entity.dish;
 
 import jakarta.persistence.*;
 
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "dish_types")
-public class DishTypeEntity {
+@Table(name = "allergens", schema = "dish_management")
+public class AllergenEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,11 +18,10 @@ public class DishTypeEntity {
 
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    private Destination destination;
+    @Column(name = "symbol_url")
+    private String symbolUrl;
 
-    @OneToMany(mappedBy = "dishType", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DishEntity> dishes;
+    private String description;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private java.time.Instant createdAt;
@@ -30,9 +29,7 @@ public class DishTypeEntity {
     @Column(name = "updated_at")
     private java.time.Instant updatedAt;
 
-    public enum Destination {
-        KITCHEN,
-        BAR
-    }
+    @ManyToMany(mappedBy = "allergens")
+    private List<DishEntity> dishes;
 
 }
