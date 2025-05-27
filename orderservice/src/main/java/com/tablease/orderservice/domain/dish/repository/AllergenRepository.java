@@ -4,7 +4,6 @@ import com.tablease.orderservice.domain.dish.Allergen;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 public interface AllergenRepository {
@@ -12,9 +11,9 @@ public interface AllergenRepository {
 
     Optional<Allergen> findById(UUID allergenId);
 
-    Set<Allergen> findAll();
+    List<Allergen> findAll();
 
-    Set<Allergen> findAllByUUID(List<UUID> allergenIds);
+    List<Allergen> findAllByAllergenByUuidIn(List<UUID> allergenIds);
 
     Allergen update(Allergen allergen);
 
