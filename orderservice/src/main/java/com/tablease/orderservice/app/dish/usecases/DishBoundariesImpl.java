@@ -7,7 +7,6 @@ import com.tablease.orderservice.domain.dish.Allergen;
 import com.tablease.orderservice.domain.dish.Dish;
 import com.tablease.orderservice.domain.dish.DishType;
 import com.tablease.orderservice.domain.dish.factory.DishFactory;
-import com.tablease.orderservice.domain.dish.factory.DishFactoryProvider;
 import com.tablease.orderservice.domain.dish.repository.AllergenRepository;
 import com.tablease.orderservice.domain.dish.repository.DishRepository;
 import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
@@ -15,22 +14,23 @@ import com.tablease.orderservice.domain.dish.valueobjects.Price;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DishBoundariesImpl implements DishBoundaries {
 
-    private final DishFactoryProvider dishFactoryProvider;
     private final DishPresenter dishPresenter;
     private final DishRepository dishRepository;
     private final AllergenRepository allergenRepository;
     private final DishTypeRepository dishTypeRepository;
+    private final Map<String, DishFactory> factories;
 
-    public DishBoundariesImpl(DishFactoryProvider dishFactoryProvider, DishPresenter dishPresenter, DishRepository dishRepository, AllergenRepository allergenRepository, DishTypeRepository dishTypeRepository) {
-        this.dishFactoryProvider = dishFactoryProvider;
+    public DishBoundariesImpl(DishPresenter dishPresenter, DishRepository dishRepository, AllergenRepository allergenRepository, DishTypeRepository dishTypeRepository, Map<String, DishFactory> factories) {
         this.dishPresenter = dishPresenter;
         this.dishRepository = dishRepository;
         this.allergenRepository = allergenRepository;
         this.dishTypeRepository = dishTypeRepository;
+        this.factories = factories;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DishBoundariesImpl implements DishBoundaries {
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenIds());
 
-        DishFactory factory = dishFactoryProvider.getFactory(dishType);
+        DishFactory factory = factories.get(dishType.getName());
         Dish dish = factory.create(request.name(),
                 request.description(),
                 allergens,

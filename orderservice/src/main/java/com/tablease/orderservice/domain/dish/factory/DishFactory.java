@@ -17,6 +17,4 @@ public interface DishFactory {
                 Price cost,
                 DishType type,
                 String thumbnailUrl);
-
-    String getSupportedFactory();
 }
