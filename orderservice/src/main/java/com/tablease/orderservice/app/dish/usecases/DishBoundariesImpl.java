@@ -36,14 +36,14 @@ public class DishBoundariesImpl implements DishBoundaries {
     @Override
     public DishResponse createDish(DishRequest request) {
 
-        DishType dishType = dishTypeRepository.findById(request.dishTypeId()).orElse(null);
+        DishType dishType = dishTypeRepository.findByUuid(request.dishTypeId()).orElse(null);
         if (dishType == null) {
             return dishPresenter.error("Invalid dish type");
         }
 
-        List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenIds());
+        List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
 
-        DishFactory factory = factories.get(dishType.getName());
+        DishFactory factory = factories.get(dishType.name());
         Dish dish = factory.create(request.name(),
                 request.description(),
                 allergens,
