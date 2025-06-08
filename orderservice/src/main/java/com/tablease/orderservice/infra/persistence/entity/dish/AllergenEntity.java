@@ -1,19 +1,19 @@
 package com.tablease.orderservice.infra.persistence.entity.dish;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "allergens", schema = "dish_management")
+@Getter
+@Setter
+@Table(name = "allergen", schema = "dish_management")
 public class AllergenEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true, columnDefinition = "uuid")
     private UUID uuid;
 
     private String name;

@@ -1,6 +1,8 @@
 package com.tablease.orderservice.infra.persistence.entity.dish;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -8,15 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "dishes", schema = "dish_management")
+@Getter
+@Setter
+@Table(name = "dish", schema = "dish_management")
 public class DishEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false, unique = true, columnDefinition = "uuid")
     private UUID uuid;
-
     private String name;
     private String description;
     private BigDecimal price;
@@ -25,15 +24,15 @@ public class DishEntity {
     private String thumbnail;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dish_type_id")
+    @JoinColumn(name = "dish_type_uuid")
     private DishTypeEntity dishType;
 
     @ManyToMany
     @JoinTable(
             name = "dish_allergens",
             schema = "dish_management",
-            joinColumns = @JoinColumn(name = "dish_id"),
-            inverseJoinColumns = @JoinColumn(name = "allergen_id")
+            joinColumns = @JoinColumn(name = "dish_uuid"),
+            inverseJoinColumns = @JoinColumn(name = "allergen_uuid")
     )
     private List<AllergenEntity> allergens;
 
