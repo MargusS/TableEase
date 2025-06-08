@@ -2,8 +2,8 @@ package com.tablease.orderservice.infra.persistence.repository.dish;
 
 import com.tablease.orderservice.domain.dish.Dish;
 import com.tablease.orderservice.domain.dish.repository.DishRepository;
+import com.tablease.orderservice.infra.mapper.DishEntityMapper;
 import com.tablease.orderservice.infra.persistence.entity.dish.DishEntity;
-import com.tablease.orderservice.infra.persistence.mapper.DishEntityMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
