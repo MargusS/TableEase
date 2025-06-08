@@ -1,22 +1,25 @@
--- Table: allergen
 CREATE TABLE dish_management.allergen (
-    id BIGSERIAL PRIMARY KEY,
-    uuid UUID NOT NULL UNIQUE,
-    name VARCHAR(100) NOT NULL
+    uuid UUID PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    symbol_url TEXT,
+    description TEXT,
+    created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP WITHOUT TIME ZONE
 );
 
-INSERT INTO dish_management.allergen (uuid, name) VALUES
-    (gen_random_uuid(), 'Gluten'),
-    (gen_random_uuid(), 'Crustaceans'),
-    (gen_random_uuid(), 'Eggs'),
-    (gen_random_uuid(), 'Fish'),
-    (gen_random_uuid(), 'Peanuts'),
-    (gen_random_uuid(), 'Soybeans'),
-    (gen_random_uuid(), 'Milk'),
-    (gen_random_uuid(), 'Nuts'),
-    (gen_random_uuid(), 'Celery'),
-    (gen_random_uuid(), 'Mustard'),
-    (gen_random_uuid(), 'Sesame seeds'),
-    (gen_random_uuid(), 'Sulphur dioxide and sulphites'),
-    (gen_random_uuid(), 'Lupin'),
-    (gen_random_uuid(), 'Molluscs');
+
+INSERT INTO dish_management.allergen (uuid, name, created_at) VALUES
+    (gen_random_uuid(), 'Gluten', now()),
+    (gen_random_uuid(), 'Crustaceans', now()),
+    (gen_random_uuid(), 'Eggs', now()),
+    (gen_random_uuid(), 'Fish', now()),
+    (gen_random_uuid(), 'Peanuts', now()),
+    (gen_random_uuid(), 'Soybeans', now()),
+    (gen_random_uuid(), 'Milk', now()),
+    (gen_random_uuid(), 'Nuts', now()),
+    (gen_random_uuid(), 'Celery', now()),
+    (gen_random_uuid(), 'Mustard', now()),
+    (gen_random_uuid(), 'Sesame seeds', now()),
+    (gen_random_uuid(), 'Sulphur dioxide and sulphites', now()),
+    (gen_random_uuid(), 'Lupin', now()),
+    (gen_random_uuid(), 'Molluscs', now());
