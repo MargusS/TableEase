@@ -1,24 +1,18 @@
 package com.tablease.orderservice.domain.dish;
 
 import com.tablease.orderservice.domain.dish.valueobjects.Destination;
-import com.tablease.orderservice.domain.dish.valueobjects.DishTypeId;
-import lombok.Getter;
 
 import java.time.Instant;
+import java.util.UUID;
 
-@Getter
-public class DishType {
-    private final DishTypeId id;
-    private final String name; // "DRINK", "MAIN", etc.
-    private final Destination destination; // BAR or KITCHEN
-    private final Instant createdAt;
-    private Instant updatedAt;
-
-    public DishType(DishTypeId id, String name, Destination destination,Instant createdAt) {
-        this.id = id;
-        this.name = name;
-        this.destination = destination;
-        this.createdAt = createdAt;
-        this.updatedAt = createdAt;
+public record DishType(
+        UUID uuid,
+        String name,
+        Destination destination,
+        Instant createdAt,
+        Instant updatedAt
+) {
+    public DishType(UUID uuid, String name, Destination destination, Instant createdAt) {
+        this(uuid, name, destination, createdAt, createdAt);
     }
 }
