@@ -2,6 +2,8 @@ package com.tablease.orderservice.infra.persistence.repository.dish;
 
 import com.tablease.orderservice.domain.dish.Allergen;
 import com.tablease.orderservice.domain.dish.repository.AllergenRepository;
+import com.tablease.orderservice.infra.mapper.AllergenEntityMapper;
+import com.tablease.orderservice.infra.persistence.entity.dish.AllergenEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,9 +14,11 @@ import java.util.UUID;
 public class AllergenRepositoryImpl implements AllergenRepository {
 
     private final AllergenJPARepository allergenJPARepository;
+    private final AllergenEntityMapper allergenEntityMapper;
 
-    public AllergenRepositoryImpl(AllergenJPARepository allergenJPARepository) {
+    public AllergenRepositoryImpl(AllergenJPARepository allergenJPARepository, AllergenEntityMapper allergenEntityMapper) {
         this.allergenJPARepository = allergenJPARepository;
+        this.allergenEntityMapper = allergenEntityMapper;
     }
 
     @Override
@@ -34,7 +38,8 @@ public class AllergenRepositoryImpl implements AllergenRepository {
 
     @Override
     public List<Allergen> findAllByAllergenByUuidIn(List<UUID> allergenIds) {
-        return List.of();
+        List<AllergenEntity> allergenEntities = this.allergenJPARepository.findAllByUuidIn(allergenIds);
+        return allergenEntities.stream().map(this.allergenEntityMapper::toDomain).toList();
     }
 
     @Override
