@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public record DishRequest(String name,
                           String description,
-                          List<UUID> allergenIds,
+                          List<UUID> allergenUUIDs,
                           boolean isActive,
                           BigDecimal price,
                           BigDecimal cost,

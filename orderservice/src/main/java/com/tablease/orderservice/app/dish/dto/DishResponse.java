@@ -1,18 +1,19 @@
 package com.tablease.orderservice.app.dish.dto;
 
-import com.tablease.orderservice.domain.dish.Allergen;
-import com.tablease.orderservice.domain.dish.DishType;
-import com.tablease.orderservice.domain.dish.valueobjects.Price;
-
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
-public record DishResponse(String name,
-                           String description,
-                           List<Allergen> allergens,
-                           Price price,
-                           Price cost,
-                           DishType dishType,
-                           String thumbnail,
-                           Instant createdAt) {
+public record DishResponse(
+        UUID uuid,
+        String name,
+        String description,
+        List<AllergenResponse> allergens,
+        BigDecimal price,
+        BigDecimal cost,
+        DishTypeResponse dishType,
+        String thumbnail,
+        Instant createdAt
+) {
 }
