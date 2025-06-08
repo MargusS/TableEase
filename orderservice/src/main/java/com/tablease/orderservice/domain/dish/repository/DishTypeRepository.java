@@ -9,7 +9,7 @@ import java.util.UUID;
 public interface DishTypeRepository {
     DishType save(DishType dishType);
 
-    Optional<DishType> findById(UUID dishTypeId);
+    Optional<DishType> findByUuid(UUID dishTypeId);
 
     List<DishType> findAll();
 

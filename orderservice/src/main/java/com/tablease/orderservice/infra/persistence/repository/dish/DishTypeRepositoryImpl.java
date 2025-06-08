@@ -2,6 +2,7 @@ package com.tablease.orderservice.infra.persistence.repository.dish;
 
 import com.tablease.orderservice.domain.dish.DishType;
 import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
+import com.tablease.orderservice.infra.mapper.DishTypeEntityMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ import java.util.UUID;
 public class DishTypeRepositoryImpl implements DishTypeRepository {
 
     private final DishTypeJpaRepository dishTypeJpaRepository;
+    private final DishTypeEntityMapper dishTypeEntityMapper;
 
-    public DishTypeRepositoryImpl(DishTypeJpaRepository dishTypeJpaRepository) {
+    public DishTypeRepositoryImpl(DishTypeJpaRepository dishTypeJpaRepository, DishTypeEntityMapper dishTypeEntityMapper) {
         this.dishTypeJpaRepository = dishTypeJpaRepository;
+        this.dishTypeEntityMapper = dishTypeEntityMapper;
     }
 
     @Override
@@ -24,8 +27,8 @@ public class DishTypeRepositoryImpl implements DishTypeRepository {
     }
 
     @Override
-    public Optional<DishType> findById(UUID dishTypeId) {
-        return Optional.empty();
+    public Optional<DishType> findByUuid(UUID dishTypeId) {
+        return this.dishTypeJpaRepository.findByUuid(dishTypeId).map(this.dishTypeEntityMapper::toDomain);
     }
 
     @Override
