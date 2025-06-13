@@ -32,7 +32,9 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     public Optional<Dish> findById(UUID dishId) {
-        return Optional.empty();
+        return this.dishJpaRepository
+                .findByUuid(dishId)
+                .map(this.dishEntityMapper::toDomain);
     }
 
     @Override
@@ -47,6 +49,6 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     public void delete(Dish dish) {
-
+        this.dishJpaRepository.deleteByUuid(dish.uuid());
     }
 }

@@ -5,9 +5,12 @@ import com.tablease.orderservice.app.dish.dto.DishResponse;
 import com.tablease.orderservice.app.dish.usecases.DishBoundaries;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/dishes")
@@ -23,5 +26,11 @@ public class DishController {
     public ResponseEntity<DishResponse> createDish(@RequestBody DishRequest request) {
         DishResponse response = dishBoundaries.createDish(request);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> deleteDish(@PathVariable("uuid") UUID uuid) {
+        dishBoundaries.deleteDish(uuid);
+        return ResponseEntity.noContent().build();
     }
 }
