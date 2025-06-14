@@ -22,7 +22,7 @@ public class DishPresenterImpl implements DishPresenter {
     }
 
     @Override
-    public DishResponse error(String error) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT, error);
+    public DishResponse error(HttpStatus status, String error) {
+        throw new ResponseStatusException(status, error);
     }
 }
