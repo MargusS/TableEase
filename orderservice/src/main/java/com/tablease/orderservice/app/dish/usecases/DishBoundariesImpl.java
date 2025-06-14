@@ -13,6 +13,7 @@ import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
 import com.tablease.orderservice.domain.dish.valueobjects.Price;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -69,5 +70,46 @@ public class DishBoundariesImpl implements DishBoundaries {
             return dishPresenter.error("Dish not found");
         }
         return dishPresenter.success(deletedDish);
+    }
+
+    @Override
+    public DishResponse updateDish(UUID dishId, DishRequest request) {
+        Dish existing = dishRepository.findById(dishId).orElse(null);
+        if (existing == null) {
+            return dishPresenter.error("Dish not found");
+        }
+
+        DishType dishType = dishTypeRepository.findByUuid(request.dishTypeId()).orElse(null);
+        if (dishType == null) {
+            return dishPresenter.error("Invalid dish type");
+        }
+
+        List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
+
+        Dish updated = new Dish(
+                dishId,
+                existing.createdAt(),
+                Instant.now(),
+                request.name(),
+                request.description(),
+                allergens,
+                request.isActive(),
+                new Price(request.price()),
+                new Price(request.cost()),
+                request.thumbnailUrl(),
+                dishType
+        );
+
+        Dish saved = dishRepository.update(updated);
+        if (saved == null) {
+            return dishPresenter.error("Failed to update dish");
+        }
+        return dishPresenter.success(saved);
+    }
+
+    @Override
+    public List<DishResponse> listDishes() {
+        List<Dish> dishes = dishRepository.findAll();
+        return dishes.stream().map(dishPresenter::success).toList();
     }
 }
