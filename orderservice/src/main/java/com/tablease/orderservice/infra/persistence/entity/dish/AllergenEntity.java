@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -29,7 +30,10 @@ public class AllergenEntity {
     @Column(name = "updated_at")
     private java.time.Instant updatedAt;
 
-    @ManyToMany(mappedBy = "allergens")
-    private List<DishEntity> dishes;
+    @ManyToMany(cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },mappedBy = "allergens")
+    private Set<DishEntity> dishes = new HashSet<>();
 
 }

@@ -6,7 +6,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -27,14 +28,14 @@ public class DishEntity {
     @JoinColumn(name = "dish_type_uuid")
     private DishTypeEntity dishType;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
-            name = "dish_allergens",
+            name = "dish_allergen",
             schema = "dish_management",
             joinColumns = @JoinColumn(name = "dish_uuid"),
             inverseJoinColumns = @JoinColumn(name = "allergen_uuid")
     )
-    private List<AllergenEntity> allergens;
+    private Set<AllergenEntity> allergens = new HashSet<>();
 
     private Instant createdAt;
     private Instant updatedAt;
