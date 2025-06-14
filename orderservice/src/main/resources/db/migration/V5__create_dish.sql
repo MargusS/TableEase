@@ -4,13 +4,12 @@ CREATE TABLE dish_management.dish (
     description TEXT,
     price NUMERIC(10, 2) NOT NULL,
     cost NUMERIC(10, 2) NOT NULL,
-    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     thumbnail TEXT,
     dish_type_uuid UUID NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITHOUT TIME ZONE,
-    CONSTRAINT fk_dish_type FOREIGN KEY (dish_type_uuid) REFERENCES dish_management.dish_type(uuid),
-    CONSTRAINT unique_dish_name UNIQUE (name)
+    CONSTRAINT fk_dish_type FOREIGN KEY (dish_type_uuid) REFERENCES dish_management.dish_type(uuid)
 );
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON dish_management.dish TO admin_user;

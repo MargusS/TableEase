@@ -38,7 +38,7 @@ public class DishEntity {
     private BigDecimal cost;
 
     @NotNull(message = "Active status is required")
-    private boolean isActive;
+    private boolean active;
     private String thumbnail;
 
     @NotNull(message = "Dish type is required")
