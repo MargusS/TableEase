@@ -1,6 +1,8 @@
 package com.tablease.orderservice.infra.persistence.entity.dish;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,8 +18,11 @@ public class DishTypeEntity {
     @Id
     private UUID uuid;
 
+    @NotBlank(message = "Dish type name cannot be blank")
+    @Size(max = 100, message = "Dish type name must be at most 100 characters")
     private String name;
 
+    @NotBlank(message = "Destination is required")
     @Enumerated(EnumType.STRING)
     private Destination destination;
 

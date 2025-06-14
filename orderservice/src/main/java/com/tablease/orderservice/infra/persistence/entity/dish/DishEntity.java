@@ -1,6 +1,10 @@
 package com.tablease.orderservice.infra.persistence.entity.dish;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,13 +21,27 @@ import java.util.UUID;
 public class DishEntity {
     @Id
     private UUID uuid;
+
+    @NotBlank(message = "Name cannot be blank")
+    @Size(max = 150, message = "Name must be at most 150 characters")
     private String name;
+
+    @Size(max = 1000, message = "Description is too long")
     private String description;
+
+    @NotNull(message = "Price is required")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Price must be positive")
     private BigDecimal price;
+
+    @NotNull(message = "Cost is required")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Cost must be zero or positive")
     private BigDecimal cost;
+
+    @NotNull(message = "Active status is required")
     private boolean isActive;
     private String thumbnail;
 
+    @NotNull(message = "Dish type is required")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dish_type_uuid")
     private DishTypeEntity dishType;
