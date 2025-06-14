@@ -1,4 +1,4 @@
-package com.tablease.orderservice.infra.web;
+package com.tablease.orderservice.infra.web.dish;
 
 import com.tablease.orderservice.app.dish.dto.DishRequest;
 import com.tablease.orderservice.app.dish.dto.DishResponse;
@@ -36,6 +36,11 @@ public class DishController {
         return ResponseEntity.ok(response);
     }
 
+    @PutMapping("/{dishId}")
+    public ResponseEntity<DishResponse> updateDish(@PathVariable UUID dishId, @RequestBody DishRequest request) {
+        DishResponse response = dishBoundaries.updateDish(dishId, request);
+        return ResponseEntity.ok(response);
+    }
 
     @DeleteMapping("/{dishUuid}")
     public ResponseEntity<DishResponse> deleteDish(@PathVariable("dishUuid") UUID dishUuid) {
@@ -43,15 +48,4 @@ public class DishController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{dishId}")
-    public ResponseEntity<DishResponse> updateDish(@PathVariable UUID dishId, @RequestBody DishRequest request) {
-        DishResponse response = dishBoundaries.updateDish(dishId, request);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<DishResponse>> listDishes() {
-        List<DishResponse> response = dishBoundaries.listDishes();
-        return ResponseEntity.ok(response);
-    }
 }
