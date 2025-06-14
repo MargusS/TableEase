@@ -36,6 +36,7 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    @Transactional
     public List<Dish> findAll() {
         List<DishEntity> entities = dishJpaRepository.findAll();
         return entities.stream().map(dishEntityMapper::toDomain).toList();

@@ -73,6 +73,12 @@ public class DishBoundariesImpl implements DishBoundaries {
     }
 
     @Override
+    public List<DishResponse> getAllDishes() {
+        List<Dish> dishes = dishRepository.findAll();
+        return dishes.stream().map(dishPresenter::success).toList();
+    }
+
+    @Override
     public DishResponse deleteDish(UUID dishId) {
         Dish deletedDish = this.dishRepository.deleteByUuid(dishId);
         if (deletedDish == null) {
