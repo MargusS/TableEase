@@ -36,8 +36,8 @@ public class DishController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{dishId}")
-    public ResponseEntity<DishResponse> updateDish(@PathVariable UUID dishId, @RequestBody DishRequest request) {
+    @PutMapping("/{dishUuid}")
+    public ResponseEntity<DishResponse> updateDish(@PathVariable("dishUuid") UUID dishId, @RequestBody DishRequest request) {
         DishResponse response = dishBoundaries.updateDish(dishId, request);
         return ResponseEntity.ok(response);
     }

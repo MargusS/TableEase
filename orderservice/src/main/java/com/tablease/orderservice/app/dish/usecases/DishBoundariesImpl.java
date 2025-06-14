@@ -96,25 +96,65 @@ public class DishBoundariesImpl implements DishBoundaries {
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
 
-        Dish updated = new Dish(
-                dishId,
-                existing.createdAt(),
-                Instant.now(),
-                request.name(),
-                request.description(),
-                allergens,
-                request.isActive(),
-                new Price(request.price()),
-                new Price(request.cost()),
-                request.thumbnailUrl(),
-                dishType
-        );
+        boolean priceChanged = !existing.price().equals(new Price(request.price()));
+        boolean costChanged = !existing.cost().equals(new Price(request.cost()));
 
-        Dish saved = dishRepository.update(updated);
-        if (saved == null) {
-            return dishPresenter.error( HttpStatus.INTERNAL_SERVER_ERROR,"Failed to update dish");
+        if (priceChanged || costChanged) {
+            Dish deactivated = new Dish(
+                    existing.uuid(),
+                    existing.createdAt(),
+                    Instant.now(),
+                    existing.name(),
+                    existing.description(),
+                    allergens,
+                    false,
+                    existing.price(),
+                    existing.cost(),
+                    existing.thumbnailUrl(),
+                    dishType
+            );
+            dishRepository.save(deactivated);
+
+            Dish newDish = new Dish(
+                    UUID.randomUUID(),
+                    Instant.now(),
+                    null,
+                    request.name(),
+                    request.description(),
+                    allergens,
+                    true,
+                    new Price(request.price()),
+                    new Price(request.cost()),
+                    request.thumbnailUrl(),
+                    dishType
+            );
+
+            Dish saved = dishRepository.save(newDish);
+            if (saved == null) {
+                return dishPresenter.error(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create new dish");
+            }
+            return dishPresenter.success(saved);
+        } else {
+            Dish updated = new Dish(
+                    existing.uuid(),
+                    existing.createdAt(),
+                    Instant.now(),
+                    request.name(),
+                    request.description(),
+                    allergens,
+                    request.isActive(),
+                    existing.price(),
+                    existing.cost(),
+                    request.thumbnailUrl(),
+                    dishType
+            );
+
+            Dish saved = dishRepository.save(updated);
+            if (saved == null) {
+                return dishPresenter.error(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update dish");
+            }
+            return dishPresenter.success(saved);
         }
-        return dishPresenter.success(saved);
     }
 
     @Override
