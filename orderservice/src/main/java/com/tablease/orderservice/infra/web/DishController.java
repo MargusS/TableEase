@@ -4,10 +4,9 @@ import com.tablease.orderservice.app.dish.dto.DishRequest;
 import com.tablease.orderservice.app.dish.dto.DishResponse;
 import com.tablease.orderservice.app.dish.usecases.DishBoundaries;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/dishes")
@@ -22,6 +21,18 @@ public class DishController {
     @PostMapping
     public ResponseEntity<DishResponse> createDish(@RequestBody DishRequest request) {
         DishResponse response = dishBoundaries.createDish(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{dishId}")
+    public ResponseEntity<DishResponse> updateDish(@PathVariable UUID dishId, @RequestBody DishRequest request) {
+        DishResponse response = dishBoundaries.updateDish(dishId, request);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<DishResponse>> listDishes() {
+        List<DishResponse> response = dishBoundaries.listDishes();
         return ResponseEntity.ok(response);
     }
 }

@@ -6,7 +6,6 @@ import com.tablease.orderservice.infra.mapper.DishEntityMapper;
 import com.tablease.orderservice.infra.persistence.entity.dish.DishEntity;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -32,17 +31,21 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     public Optional<Dish> findById(UUID dishId) {
-        return Optional.empty();
+        return dishJpaRepository.findByUuid(dishId)
+                .map(dishEntityMapper::toDomain);
     }
 
     @Override
     public List<Dish> findAll() {
-        return new ArrayList<>();
+        List<DishEntity> entities = dishJpaRepository.findAll();
+        return entities.stream().map(dishEntityMapper::toDomain).toList();
     }
 
     @Override
     public Dish update(Dish dish) {
-        return null;
+        DishEntity entity = dishEntityMapper.toEntity(dish);
+        DishEntity saved = dishJpaRepository.save(entity);
+        return dishEntityMapper.toDomain(saved);
     }
 
     @Override
