@@ -18,12 +18,14 @@ import java.util.UUID;
 public interface DishEntityMapper {
     
     @Mapping(source = "thumbnail", target = "thumbnailUrl")
+    @Mapping(source = "active", target = "isActive")
     @Mapping(source = "price", target = "price", qualifiedByName = "bigDecimalToPrice")
     @Mapping(source = "cost", target = "cost", qualifiedByName = "bigDecimalToPrice")
     Dish toDomain(DishEntity entity);
 
     @InheritInverseConfiguration
     @Mapping(source = "type", target = "dishType")
+    @Mapping(source = "isActive", target = "active")
     @Mapping(source = "price", target = "price", qualifiedByName = "priceToBigDecimal")
     @Mapping(source = "cost", target = "cost", qualifiedByName = "priceToBigDecimal")
     DishEntity toEntity(Dish domain);
