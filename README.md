@@ -29,14 +29,13 @@ This project is a distributed microservices-based solution that simulates a real
 ## 🗂️ Repository Structure (Monorepo)
 
 ```
-digital-commander/
+tablease/
 ├── order-service/           # Main service to create and manage orders
 ├── kitchen-service/         # Handles kitchen-specific orders
 ├── bar-service/             # Handles bar-specific orders
 ├── notification-service/    # Notification service (push/email)
 ├── gateway/                 # API Gateway
-├── infra/                   # Kafka, databases, nginx
-├── docker-compose.yml       # Service orchestration
+├── docker/                  # Service orchestration
 └── .github/workflows/ci.yml # CI/CD pipeline with GitHub Actions
 ```
 
@@ -93,17 +92,15 @@ This will start:
 ## 📌 Project Status
 
 ✅ Architecture defined  
-✅ `comanda-service` under development  
-🚧 Kitchen, bar, and notification services in progress  
-🚀 CI/CD implementation ongoing
+🚧 `order-service` under development  
+📃 Kitchen, bar, and notification services in progress  
+📃 CI/CD implementation ongoing
 
 ---
 
 ## 📬 Contact
 
-- LinkedIn: [your-linkedin]
-- GitHub: [your-github]
-- Email: [your-email]
+- LinkedIn: [[[your-linkedin]](https://www.linkedin.com/in/agustinmaranidev/)](https://www.linkedin.com/in/agustinmaranidev/)
 
 ---
 
