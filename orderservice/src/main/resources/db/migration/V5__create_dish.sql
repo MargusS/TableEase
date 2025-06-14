@@ -9,5 +9,9 @@ CREATE TABLE dish_management.dish (
     dish_type_uuid UUID NOT NULL,
     created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITHOUT TIME ZONE,
-    FOREIGN KEY (dish_type_uuid) REFERENCES dish_management.dish_type(uuid)
+    CONSTRAINT fk_dish_type FOREIGN KEY (dish_type_uuid) REFERENCES dish_management.dish_type(uuid),
+    CONSTRAINT unique_dish_name UNIQUE (name)
 );
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON dish_management.dish TO admin_user;
+GRANT SELECT ON dish_management.dish TO developer_user;

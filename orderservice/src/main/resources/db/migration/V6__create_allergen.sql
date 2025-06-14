@@ -7,7 +7,6 @@ CREATE TABLE dish_management.allergen (
     updated_at TIMESTAMP WITHOUT TIME ZONE
 );
 
-
 INSERT INTO dish_management.allergen (uuid, name, created_at) VALUES
     (gen_random_uuid(), 'Gluten', now()),
     (gen_random_uuid(), 'Crustaceans', now()),
@@ -23,3 +22,6 @@ INSERT INTO dish_management.allergen (uuid, name, created_at) VALUES
     (gen_random_uuid(), 'Sulphur dioxide and sulphites', now()),
     (gen_random_uuid(), 'Lupin', now()),
     (gen_random_uuid(), 'Molluscs', now());
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON dish_management.allergen TO admin_user;
+GRANT SELECT ON dish_management.allergen TO developer_user;
