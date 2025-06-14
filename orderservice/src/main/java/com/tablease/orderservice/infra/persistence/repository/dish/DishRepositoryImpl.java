@@ -4,6 +4,7 @@ import com.tablease.orderservice.domain.dish.Dish;
 import com.tablease.orderservice.domain.dish.repository.DishRepository;
 import com.tablease.orderservice.infra.mapper.DishEntityMapper;
 import com.tablease.orderservice.infra.persistence.entity.dish.DishEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -22,16 +23,14 @@ public class DishRepositoryImpl implements DishRepository {
         this.dishEntityMapper = dishEntityMapper;
     }
 
-
     @Override
     public Dish save(Dish dish) {
-        DishEntity entity = dishEntityMapper.toEntity(dish);
-        DishEntity saved = dishJpaRepository.save(entity);
-        return dishEntityMapper.toDomain(saved);
+        DishEntity savedEntity = dishJpaRepository.save(dishEntityMapper.toEntity(dish));
+        return dishEntityMapper.toDomain(savedEntity);
     }
 
     @Override
-    public Optional<Dish> findById(UUID dishId) {
+    public Optional<Dish> findByUuid(UUID dishId) {
         return Optional.empty();
     }
 
@@ -46,7 +45,13 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
-    public void delete(Dish dish) {
-
+    @Transactional
+    public Dish deleteByUuid(UUID dishUuid) {
+        DishEntity dishToDelete = this.dishJpaRepository.findById(dishUuid).orElse(null);
+        if (dishToDelete == null) {
+            return null;
+        }
+        this.dishJpaRepository.delete(dishToDelete);
+        return this.dishEntityMapper.toDomain(dishToDelete);
     }
 }

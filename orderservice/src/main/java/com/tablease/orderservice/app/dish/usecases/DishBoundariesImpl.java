@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class DishBoundariesImpl implements DishBoundaries {
@@ -59,5 +60,14 @@ public class DishBoundariesImpl implements DishBoundaries {
             return dishPresenter.error("Failed to create dish");
         }
         return dishPresenter.success(savedDish);
+    }
+
+    @Override
+    public DishResponse deleteDish(UUID dishId) {
+        Dish deletedDish = this.dishRepository.deleteByUuid(dishId);
+        if (deletedDish == null) {
+            return dishPresenter.error("Dish not found");
+        }
+        return dishPresenter.success(deletedDish);
     }
 }

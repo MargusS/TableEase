@@ -9,10 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface DishJpaRepository extends JpaRepository<DishEntity, Long> {
-    Optional<DishEntity> findByUuid(UUID uuid);
-
+public interface DishJpaRepository extends JpaRepository<DishEntity, UUID> {
     List<DishEntity> findAllByDishTypeIn(List<UUID> uuids);
-
-    void deleteByUuid(UUID uuid);
 }

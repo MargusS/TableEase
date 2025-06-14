@@ -9,11 +9,11 @@ import java.util.UUID;
 public interface DishRepository {
     Dish save(Dish dish);
 
-    Optional<Dish> findById(UUID dishId);
+    Optional<Dish> findByUuid(UUID dishId);
 
     List<Dish> findAll();
 
     Dish update(Dish dish);
 
-    void delete(Dish dish);
+    Dish deleteByUuid(UUID dishUuid);
 }
