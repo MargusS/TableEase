@@ -12,6 +12,4 @@ public interface DishBoundaries {
     List<DishResponse> getAllDishes();
     DishResponse updateDish(UUID dishId, DishRequest request);
     DishResponse deleteDish(UUID dishId);
-    DishResponse updateDish(UUID dishId, DishRequest request);
-    List<DishResponse> listDishes();
 }
