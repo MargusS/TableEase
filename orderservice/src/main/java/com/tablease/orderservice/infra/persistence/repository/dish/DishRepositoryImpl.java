@@ -43,13 +43,6 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
-    public Dish update(Dish dish) {
-        DishEntity entity = dishEntityMapper.toEntity(dish);
-        DishEntity saved = dishJpaRepository.save(entity);
-        return dishEntityMapper.toDomain(saved);
-    }
-
-    @Override
     @Transactional
     public Dish deleteByUuid(UUID dishUuid) {
         DishEntity dishToDelete = this.dishJpaRepository.findById(dishUuid).orElse(null);

@@ -13,7 +13,5 @@ public interface DishRepository {
 
     List<Dish> findAll();
 
-    Dish update(Dish dish);
-
     Dish deleteByUuid(UUID dishUuid);
 }
