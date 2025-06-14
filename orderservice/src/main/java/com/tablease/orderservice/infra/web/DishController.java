@@ -24,6 +24,13 @@ public class DishController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/{dishUuid}")
+    public ResponseEntity<DishResponse> getDish(@PathVariable("dishUuid") UUID dishUuid) {
+        DishResponse response = dishBoundaries.getDish(dishUuid);
+        return ResponseEntity.ok(response);
+    }
+
+
     @DeleteMapping("/{dishUuid}")
     public ResponseEntity<DishResponse> deleteDish(@PathVariable("dishUuid") UUID dishUuid) {
         DishResponse response = dishBoundaries.deleteDish(dishUuid);

@@ -64,6 +64,15 @@ public class DishBoundariesImpl implements DishBoundaries {
     }
 
     @Override
+    public DishResponse getDish(UUID dishId) {
+        Dish dish = dishRepository.findByUuid(dishId).orElse(null);
+        if (dish == null) {
+            return dishPresenter.error("Dish not found");
+        }
+        return dishPresenter.success(dish);
+    }
+
+    @Override
     public DishResponse deleteDish(UUID dishId) {
         Dish deletedDish = this.dishRepository.deleteByUuid(dishId);
         if (deletedDish == null) {

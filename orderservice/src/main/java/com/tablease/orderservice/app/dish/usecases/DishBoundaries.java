@@ -8,6 +8,9 @@ import java.util.UUID;
 
 public interface DishBoundaries {
     DishResponse createDish(DishRequest request);
+    DishResponse getDish(UUID dishId);
+    List<DishResponse> getAllDishes();
+    DishResponse updateDish(UUID dishId, DishRequest request);
     DishResponse deleteDish(UUID dishId);
     DishResponse updateDish(UUID dishId, DishRequest request);
     List<DishResponse> listDishes();

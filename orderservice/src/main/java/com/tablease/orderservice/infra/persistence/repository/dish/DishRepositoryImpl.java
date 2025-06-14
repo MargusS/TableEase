@@ -29,8 +29,9 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
-    public Optional<Dish> findById(UUID dishId) {
-        return dishJpaRepository.findByUuid(dishId)
+    @Transactional
+    public Optional<Dish> findByUuid(UUID dishId) {
+        return dishJpaRepository.findById(dishId)
                 .map(dishEntityMapper::toDomain);
     }
 
