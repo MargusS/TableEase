@@ -20,9 +20,4 @@ public class DishPresenterImpl implements DishPresenter {
     public DishResponse success(Dish dish) {
         return dishMapper.toResponse(dish);
     }
-
-    @Override
-    public DishResponse error(HttpStatus status, String error) {
-        throw new ResponseStatusException(status, error);
-    }
 }

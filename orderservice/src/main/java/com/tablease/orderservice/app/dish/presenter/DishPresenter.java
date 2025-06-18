@@ -6,5 +6,4 @@ import org.springframework.http.HttpStatus;
 
 public interface DishPresenter {
     DishResponse success(Dish dish);
-    DishResponse error(HttpStatus status,String error);
 }
