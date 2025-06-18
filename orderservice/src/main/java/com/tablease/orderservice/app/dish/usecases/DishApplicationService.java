@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public interface DishBoundaries {
+public interface DishApplicationService {
     DishResponse createDish(DishRequest request);
     DishResponse getDish(UUID dishId);
     List<DishResponse> getAllDishes();

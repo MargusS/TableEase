@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class DishBoundariesImpl implements DishBoundaries {
+public class DishApplicationServiceImpl implements DishApplicationService {
 
     private final DishPresenter dishPresenter;
     private final DishRepository dishRepository;
@@ -29,7 +29,7 @@ public class DishBoundariesImpl implements DishBoundaries {
     private final DishTypeRepository dishTypeRepository;
     private final Map<String, DishFactory> factories;
 
-    public DishBoundariesImpl(DishPresenter dishPresenter, DishRepository dishRepository, AllergenRepository allergenRepository, DishTypeRepository dishTypeRepository, Map<String, DishFactory> factories) {
+    public DishApplicationServiceImpl(DishPresenter dishPresenter, DishRepository dishRepository, AllergenRepository allergenRepository, DishTypeRepository dishTypeRepository, Map<String, DishFactory> factories) {
         this.dishPresenter = dishPresenter;
         this.dishRepository = dishRepository;
         this.allergenRepository = allergenRepository;
