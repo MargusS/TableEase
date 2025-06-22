@@ -10,9 +10,11 @@ import com.tablease.orderservice.domain.dish.factory.DishFactory;
 import com.tablease.orderservice.domain.dish.repository.AllergenRepository;
 import com.tablease.orderservice.domain.dish.repository.DishRepository;
 import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
-import com.tablease.orderservice.domain.dish.valueobjects.Price;
+import com.tablease.orderservice.domain.dish.valueobjects.CostPrice;
+import com.tablease.orderservice.domain.dish.valueobjects.SellingPrice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class DishBoundariesImpl implements DishBoundaries {
+public class DishApplicationServiceImpl implements DishApplicationService {
 
     private final DishPresenter dishPresenter;
     private final DishRepository dishRepository;
@@ -28,7 +30,7 @@ public class DishBoundariesImpl implements DishBoundaries {
     private final DishTypeRepository dishTypeRepository;
     private final Map<String, DishFactory> factories;
 
-    public DishBoundariesImpl(DishPresenter dishPresenter, DishRepository dishRepository, AllergenRepository allergenRepository, DishTypeRepository dishTypeRepository, Map<String, DishFactory> factories) {
+    public DishApplicationServiceImpl(DishPresenter dishPresenter, DishRepository dishRepository, AllergenRepository allergenRepository, DishTypeRepository dishTypeRepository, Map<String, DishFactory> factories) {
         this.dishPresenter = dishPresenter;
         this.dishRepository = dishRepository;
         this.allergenRepository = allergenRepository;
@@ -41,7 +43,7 @@ public class DishBoundariesImpl implements DishBoundaries {
 
         DishType dishType = dishTypeRepository.findByUuid(request.dishTypeId()).orElse(null);
         if (dishType == null) {
-            return dishPresenter.error(HttpStatus.NOT_FOUND, "Invalid dish type");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid dish type");
         }
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
@@ -51,15 +53,15 @@ public class DishBoundariesImpl implements DishBoundaries {
                 request.description(),
                 allergens,
                 request.isActive(),
-                new Price(request.price()),
-                new Price(request.cost()),
+                new SellingPrice(request.price()),
+                new CostPrice(request.cost()),
                 dishType,
                 request.thumbnailUrl());
 
         Dish savedDish = dishRepository.save(dish);
 
         if (savedDish == null) {
-            return dishPresenter.error(HttpStatus.INTERNAL_SERVER_ERROR,"Failed to create dish");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create dish");
         }
         return dishPresenter.success(savedDish);
     }
@@ -68,7 +70,7 @@ public class DishBoundariesImpl implements DishBoundaries {
     public DishResponse getDish(UUID dishId) {
         Dish dish = dishRepository.findByUuid(dishId).orElse(null);
         if (dish == null) {
-            return dishPresenter.error(HttpStatus.NOT_FOUND, "Dish not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish not found");
         }
         return dishPresenter.success(dish);
     }
@@ -77,7 +79,7 @@ public class DishBoundariesImpl implements DishBoundaries {
     public List<DishResponse> getAllDishes() {
         List<Dish> dishes = dishRepository.findAll();
         if (dishes.isEmpty()) {
-            return List.of(dishPresenter.error(HttpStatus.NOT_FOUND, "No dishes found"));
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No dishes found");
         }
         return dishes.stream().map(dishPresenter::success).toList();
     }
@@ -86,18 +88,18 @@ public class DishBoundariesImpl implements DishBoundaries {
     public DishResponse updateDish(UUID dishId, DishRequest request) {
         Dish existing = dishRepository.findByUuid(dishId).orElse(null);
         if (existing == null) {
-            return dishPresenter.error( HttpStatus.NOT_FOUND,"Dish not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish not found");
         }
 
         DishType dishType = dishTypeRepository.findByUuid(request.dishTypeId()).orElse(null);
         if (dishType == null) {
-            return dishPresenter.error( HttpStatus.NOT_FOUND,"Invalid dish type");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid dish type");
         }
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
 
-        boolean priceChanged = !existing.price().equals(new Price(request.price()));
-        boolean costChanged = !existing.cost().equals(new Price(request.cost()));
+        boolean priceChanged = !existing.price().getAmount().equals(request.price());
+        boolean costChanged = !existing.cost().getAmount().equals(request.cost());
 
         if (priceChanged || costChanged) {
             Dish deactivated = new Dish(
@@ -123,15 +125,15 @@ public class DishBoundariesImpl implements DishBoundaries {
                     request.description(),
                     allergens,
                     true,
-                    new Price(request.price()),
-                    new Price(request.cost()),
+                    new SellingPrice(request.price()),
+                    new CostPrice(request.cost()),
                     request.thumbnailUrl(),
                     dishType
             );
 
             Dish saved = dishRepository.save(newDish);
             if (saved == null) {
-                return dishPresenter.error(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create new dish");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create new dish");
             }
             return dishPresenter.success(saved);
         } else {
@@ -151,7 +153,7 @@ public class DishBoundariesImpl implements DishBoundaries {
 
             Dish saved = dishRepository.save(updated);
             if (saved == null) {
-                return dishPresenter.error(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update dish");
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Failed to update dish");
             }
             return dishPresenter.success(saved);
         }
@@ -161,7 +163,7 @@ public class DishBoundariesImpl implements DishBoundaries {
     public DishResponse deleteDish(UUID dishId) {
         Dish deletedDish = this.dishRepository.deleteByUuid(dishId);
         if (deletedDish == null) {
-            return dishPresenter.error( HttpStatus.NOT_FOUND,"Dish not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish not found");
         }
         return dishPresenter.success(deletedDish);
     }

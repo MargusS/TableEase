@@ -1,7 +1,9 @@
 package com.tablease.orderservice.infra.mapper;
 
 import com.tablease.orderservice.domain.dish.Dish;
-import com.tablease.orderservice.domain.dish.valueobjects.Price;
+import com.tablease.orderservice.domain.dish.valueobjects.CostPrice;
+import com.tablease.orderservice.domain.dish.valueobjects.MonetaryValue;
+import com.tablease.orderservice.domain.dish.valueobjects.SellingPrice;
 import com.tablease.orderservice.infra.persistence.entity.dish.DishEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -19,8 +21,8 @@ public interface DishEntityMapper {
     
     @Mapping(source = "thumbnail", target = "thumbnailUrl")
     @Mapping(source = "active", target = "isActive")
-    @Mapping(source = "price", target = "price", qualifiedByName = "bigDecimalToPrice")
-    @Mapping(source = "cost", target = "cost", qualifiedByName = "bigDecimalToPrice")
+    @Mapping(source = "price", target = "price", qualifiedByName = "bigDecimalToSellingPrice")
+    @Mapping(source = "cost", target = "cost", qualifiedByName = "bigDecimalToCostPrice")
     Dish toDomain(DishEntity entity);
 
     @InheritInverseConfiguration
@@ -30,13 +32,17 @@ public interface DishEntityMapper {
     @Mapping(source = "cost", target = "cost", qualifiedByName = "priceToBigDecimal")
     DishEntity toEntity(Dish domain);
 
-    @Named("bigDecimalToPrice")
-    default Price toPrice(BigDecimal amount) {
-        return new Price(amount);
+    @Named("bigDecimalToSellingPrice")
+    default SellingPrice toSellingPrice(BigDecimal amount) {
+        return new SellingPrice(amount);
+    }
+    @Named("bigDecimalToCostPrice")
+    default CostPrice toCostPrice(BigDecimal amount) {
+        return new CostPrice(amount);
     }
 
     @Named("priceToBigDecimal")
-    default BigDecimal toBigDecimal(Price price) {
-        return price.amount();
+    default BigDecimal toBigDecimal(MonetaryValue price) {
+        return price.getAmount();
     }
 }

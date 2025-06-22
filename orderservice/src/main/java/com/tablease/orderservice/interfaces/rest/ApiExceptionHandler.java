@@ -1,4 +1,4 @@
-package com.tablease.orderservice.infra.web;
+package com.tablease.orderservice.interfaces.rest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;

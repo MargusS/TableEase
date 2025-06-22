@@ -1,4 +1,4 @@
-package com.tablease.orderservice.infra.web;
+package com.tablease.orderservice.interfaces.rest;
 
 import java.time.Instant;
 
