@@ -10,7 +10,8 @@ import com.tablease.orderservice.domain.dish.factory.DishFactory;
 import com.tablease.orderservice.domain.dish.repository.AllergenRepository;
 import com.tablease.orderservice.domain.dish.repository.DishRepository;
 import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
-import com.tablease.orderservice.domain.dish.valueobjects.Price;
+import com.tablease.orderservice.domain.dish.valueobjects.CostPrice;
+import com.tablease.orderservice.domain.dish.valueobjects.SellingPrice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,8 +53,8 @@ public class DishApplicationServiceImpl implements DishApplicationService {
                 request.description(),
                 allergens,
                 request.isActive(),
-                new Price(request.price()),
-                new Price(request.cost()),
+                new SellingPrice(request.price()),
+                new CostPrice(request.cost()),
                 dishType,
                 request.thumbnailUrl());
 
@@ -97,8 +98,8 @@ public class DishApplicationServiceImpl implements DishApplicationService {
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
 
-        boolean priceChanged = !existing.price().equals(new Price(request.price()));
-        boolean costChanged = !existing.cost().equals(new Price(request.cost()));
+        boolean priceChanged = !existing.price().getAmount().equals(request.price());
+        boolean costChanged = !existing.cost().getAmount().equals(request.cost());
 
         if (priceChanged || costChanged) {
             Dish deactivated = new Dish(
@@ -124,8 +125,8 @@ public class DishApplicationServiceImpl implements DishApplicationService {
                     request.description(),
                     allergens,
                     true,
-                    new Price(request.price()),
-                    new Price(request.cost()),
+                    new SellingPrice(request.price()),
+                    new CostPrice(request.cost()),
                     request.thumbnailUrl(),
                     dishType
             );
