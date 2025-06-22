@@ -1,4 +1,4 @@
-package com.tablease.orderservice.infra.web.dish;
+package com.tablease.orderservice.interfaces.rest.dish;
 
 import com.tablease.orderservice.app.dish.dto.DishRequest;
 import com.tablease.orderservice.app.dish.dto.DishResponse;
