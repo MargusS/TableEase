@@ -9,8 +9,9 @@ import com.tablease.orderservice.domain.dish.factory.DishFactory;
 import com.tablease.orderservice.domain.dish.repository.AllergenRepository;
 import com.tablease.orderservice.domain.dish.repository.DishRepository;
 import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
+import com.tablease.orderservice.domain.dish.valueobjects.CostPrice;
 import com.tablease.orderservice.domain.dish.valueobjects.Destination;
-import com.tablease.orderservice.domain.dish.valueobjects.Price;
+import com.tablease.orderservice.domain.dish.valueobjects.SellingPrice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -182,8 +183,8 @@ class DishApplicationServiceImplTest {
                 "Original Description",
                 List.of(),
                 true,
-                new Price(BigDecimal.ONE),
-                new Price(BigDecimal.ONE),
+                new SellingPrice(BigDecimal.ONE),
+                new CostPrice(BigDecimal.ONE),
                 "original-thumbnail",
                 dishType
         );
@@ -241,8 +242,8 @@ class DishApplicationServiceImplTest {
                 "Original Description",
                 List.of(),
                 true,
-                new Price(BigDecimal.ONE),
-                new Price(BigDecimal.ONE),
+                new SellingPrice(BigDecimal.ONE),
+                new CostPrice(BigDecimal.ONE),
                 "original-thumbnail",
                 dishType
         );
@@ -269,8 +270,8 @@ class DishApplicationServiceImplTest {
                 request.description(),
                 List.of(),
                 true,
-                new Price(request.price()),
-                new Price(request.cost()),
+                new SellingPrice(request.price()),
+                new CostPrice(request.cost()),
                 request.thumbnailUrl(),
                 dishType
         );
@@ -332,6 +333,6 @@ class DishApplicationServiceImplTest {
 
     private Dish sampleDish(UUID id) {
         DishType type = new DishType(UUID.randomUUID(), "type", Destination.KITCHEN, Instant.now(), Instant.now());
-        return new Dish(id, "name", "desc", List.of(), true, new Price(BigDecimal.ONE), new Price(BigDecimal.ONE), type, "thumb");
+        return new Dish(id, "name", "desc", List.of(), true, new SellingPrice(BigDecimal.ONE), new CostPrice(BigDecimal.ONE), type, "thumb");
     }
 }
