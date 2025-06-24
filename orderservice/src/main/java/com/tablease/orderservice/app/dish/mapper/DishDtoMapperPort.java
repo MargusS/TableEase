@@ -1,4 +1,4 @@
-package com.tablease.orderservice.app.dish.ports;
+package com.tablease.orderservice.app.dish.mapper;
 
 import com.tablease.orderservice.app.dish.dto.DishResponse;
 import com.tablease.orderservice.domain.dish.Dish;

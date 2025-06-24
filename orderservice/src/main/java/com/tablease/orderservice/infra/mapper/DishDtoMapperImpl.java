@@ -1,7 +1,7 @@
 package com.tablease.orderservice.infra.mapper;
 
 import com.tablease.orderservice.app.dish.dto.DishResponse;
-import com.tablease.orderservice.app.dish.ports.DishDtoMapperPort;
+import com.tablease.orderservice.app.dish.mapper.DishDtoMapperPort;
 import com.tablease.orderservice.domain.dish.Dish;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
