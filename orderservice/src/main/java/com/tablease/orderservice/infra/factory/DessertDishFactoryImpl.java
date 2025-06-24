@@ -14,7 +14,7 @@ import java.util.UUID;
 @Component("DESSERT")
 public class DessertDishFactoryImpl implements DessertDishFactory {
     @Override
-    public Dish create(String name, String description, List<Allergen> allergens, boolean isActive, SellingPrice price, CostPrice cost, DishType type, String thumbnailUrl) {
-        return new Dish(UUID.randomUUID(), name, description, allergens, isActive, price, cost, type, thumbnailUrl);
+    public Dish create(String name, String description, SellingPrice price, CostPrice cost, DishType dishType, List<Allergen> allergens, String thumbnail) {
+        return new Dish(UUID.randomUUID(), name, description, price, cost, dishType, allergens, thumbnail);
     }
 }
