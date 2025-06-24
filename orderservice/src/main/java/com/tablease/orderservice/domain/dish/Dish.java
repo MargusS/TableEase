@@ -44,4 +44,26 @@ public class Dish {
         this.updatedAt = this.createdAt;
     }
 
+    public void deactivate() {
+        this.isActive = false;
+        this.updatedAt = Instant.now();
+    }
+
+    public boolean hasSamePriceAndCost(SellingPrice price, CostPrice cost) {
+        return this.price.getAmount().equals(price.getAmount()) && this.cost.getAmount().equals(cost.getAmount());
+    }
+
+    public void update(String name, String description, DishType dishType, List<Allergen> allergens, String thumbnail, boolean isActive) {
+        if (name == null || name.isBlank()) throw new IllegalArgumentException("Dish name cannot be null or empty");
+        if (description.length() > 500) throw new IllegalArgumentException("Description is too long");
+        if (dishType == null) throw new IllegalArgumentException("Dish type is required");
+
+        this.name = name.trim();
+        this.description = (description != null) ? description.trim() : null;
+        this.dishType = dishType;
+        this.allergens = List.copyOf(allergens);
+        this.thumbnail = (thumbnail != null && !thumbnail.isBlank()) ? thumbnail.trim() : null;
+        this.isActive = isActive;
+        this.updatedAt = Instant.now();
+    }
 }
