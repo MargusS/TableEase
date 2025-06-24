@@ -47,15 +47,17 @@ public class DishApplicationServiceImpl implements DishApplicationService {
         }
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
+        if (allergens.size() != request.allergenUUIDs().size()) {
+            throw new IllegalArgumentException("One or more allergens not found");
+        }
 
-        DishFactory factory = factories.get(dishType.name());
+        DishFactory factory = factories.get(dishType.getName());
         Dish dish = factory.create(request.name(),
                 request.description(),
-                allergens,
-                request.isActive(),
                 new SellingPrice(request.price()),
                 new CostPrice(request.cost()),
                 dishType,
+                allergens,
                 request.thumbnailUrl());
 
         Dish savedDish = dishRepository.save(dish);
