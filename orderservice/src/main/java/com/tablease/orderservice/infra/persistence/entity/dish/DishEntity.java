@@ -42,11 +42,11 @@ public class DishEntity {
     private String thumbnail;
 
     @NotNull(message = "Dish type is required")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dish_type_uuid")
     private DishTypeEntity dishType;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "dish_allergen",
             schema = "dish_management",
