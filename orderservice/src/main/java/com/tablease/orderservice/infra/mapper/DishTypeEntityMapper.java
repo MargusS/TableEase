@@ -8,16 +8,14 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.UUID;
-
 @Mapper(componentModel = "spring")
 public interface DishTypeEntityMapper {
 
-    @Mapping(source = "destination", target = "destination", qualifiedByName = "entityToDomainDestination")
+    @Mapping(source = "destination", target = "preparationArea", qualifiedByName = "entityToDomainDestination")
     DishType toDomain(DishTypeEntity entity);
 
     @InheritInverseConfiguration
-    @Mapping(source = "destination", target = "destination", qualifiedByName = "domainToEntityDestination")
+    @Mapping(source = "preparationArea", target = "destination", qualifiedByName = "domainToEntityDestination")
     @Mapping(target = "dishes", ignore = true)
     DishTypeEntity toEntity(DishType domain);
 
