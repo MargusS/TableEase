@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface DishTypeDtoMapperImpl {
-    
-    @Mapping(source = "destination", target = "destination")
+
+    @Mapping(source = "preparationArea", target = "destination")
     DishTypeResponse toDto(DishType dishType);
 }

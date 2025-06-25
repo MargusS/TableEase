@@ -11,23 +11,18 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @Mapper(componentModel = "spring", uses = {
         DishTypeEntityMapper.class,
         AllergenEntityMapper.class
 })
 public interface DishEntityMapper {
-    
-    @Mapping(source = "thumbnail", target = "thumbnailUrl")
-    @Mapping(source = "active", target = "isActive")
+
     @Mapping(source = "price", target = "price", qualifiedByName = "bigDecimalToSellingPrice")
     @Mapping(source = "cost", target = "cost", qualifiedByName = "bigDecimalToCostPrice")
     Dish toDomain(DishEntity entity);
 
     @InheritInverseConfiguration
-    @Mapping(source = "type", target = "dishType")
-    @Mapping(source = "isActive", target = "active")
     @Mapping(source = "price", target = "price", qualifiedByName = "priceToBigDecimal")
     @Mapping(source = "cost", target = "cost", qualifiedByName = "priceToBigDecimal")
     DishEntity toEntity(Dish domain);
@@ -36,6 +31,7 @@ public interface DishEntityMapper {
     default SellingPrice toSellingPrice(BigDecimal amount) {
         return new SellingPrice(amount);
     }
+
     @Named("bigDecimalToCostPrice")
     default CostPrice toCostPrice(BigDecimal amount) {
         return new CostPrice(amount);

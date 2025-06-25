@@ -12,11 +12,11 @@ import com.tablease.orderservice.domain.dish.repository.DishRepository;
 import com.tablease.orderservice.domain.dish.repository.DishTypeRepository;
 import com.tablease.orderservice.domain.dish.valueobjects.CostPrice;
 import com.tablease.orderservice.domain.dish.valueobjects.SellingPrice;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -47,15 +47,17 @@ public class DishApplicationServiceImpl implements DishApplicationService {
         }
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
+        if (allergens.size() != request.allergenUUIDs().size()) {
+            throw new IllegalArgumentException("One or more allergens not found");
+        }
 
-        DishFactory factory = factories.get(dishType.name());
+        DishFactory factory = factories.get(dishType.getName());
         Dish dish = factory.create(request.name(),
                 request.description(),
-                allergens,
-                request.isActive(),
                 new SellingPrice(request.price()),
                 new CostPrice(request.cost()),
                 dishType,
+                allergens,
                 request.thumbnailUrl());
 
         Dish savedDish = dishRepository.save(dish);
@@ -85,6 +87,7 @@ public class DishApplicationServiceImpl implements DishApplicationService {
     }
 
     @Override
+    @Transactional
     public DishResponse updateDish(UUID dishId, DishRequest request) {
         Dish existing = dishRepository.findByUuid(dishId).orElse(null);
         if (existing == null) {
@@ -97,63 +100,32 @@ public class DishApplicationServiceImpl implements DishApplicationService {
         }
 
         List<Allergen> allergens = allergenRepository.findAllByAllergenByUuidIn(request.allergenUUIDs());
+        if (allergens.size() != request.allergenUUIDs().size()) {
+            throw new IllegalArgumentException("One or more allergens not found");
+        }
 
-        boolean priceChanged = !existing.price().getAmount().equals(request.price());
-        boolean costChanged = !existing.cost().getAmount().equals(request.cost());
-
-        if (priceChanged || costChanged) {
-            Dish deactivated = new Dish(
-                    existing.uuid(),
-                    existing.createdAt(),
-                    Instant.now(),
-                    existing.name(),
-                    existing.description(),
-                    allergens,
-                    false,
-                    existing.price(),
-                    existing.cost(),
-                    existing.thumbnailUrl(),
-                    dishType
-            );
-            dishRepository.save(deactivated);
-
-            Dish newDish = new Dish(
-                    UUID.randomUUID(),
-                    Instant.now(),
-                    null,
-                    request.name(),
+        if (existing.hasSamePriceAndCost(new SellingPrice(request.price()), new CostPrice(request.cost()))) {
+            existing.update(request.name(), request.description(), dishType, allergens, request.thumbnailUrl(), request.isActive());
+            Dish updated = dishRepository.save(existing);
+            if (updated == null) {
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update dish");
+            }
+            return dishPresenter.success(updated);
+        } else {
+            existing.deactivate();
+            dishRepository.save(existing);
+            DishFactory factory = factories.get(dishType.getName());
+            Dish updated = factory.create(request.name(),
                     request.description(),
-                    allergens,
-                    true,
                     new SellingPrice(request.price()),
                     new CostPrice(request.cost()),
-                    request.thumbnailUrl(),
-                    dishType
-            );
-
-            Dish saved = dishRepository.save(newDish);
-            if (saved == null) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to create new dish");
-            }
-            return dishPresenter.success(saved);
-        } else {
-            Dish updated = new Dish(
-                    existing.uuid(),
-                    existing.createdAt(),
-                    Instant.now(),
-                    request.name(),
-                    request.description(),
+                    dishType,
                     allergens,
-                    request.isActive(),
-                    existing.price(),
-                    existing.cost(),
-                    request.thumbnailUrl(),
-                    dishType
-            );
+                    request.thumbnailUrl());
 
             Dish saved = dishRepository.save(updated);
             if (saved == null) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Failed to update dish");
+                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to update price and cost");
             }
             return dishPresenter.success(saved);
         }
